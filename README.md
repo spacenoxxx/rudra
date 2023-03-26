@@ -7,7 +7,7 @@
 3. An exsiting AWS Key-Pair
 
 ## This PoC uses AWS CloudFormation template to:
-1. Deploy an Linux EC2 instance in a precreated VPC with a Public Subnet
+1. Deploy a Linux EC2 instance in a precreated VPC with a Public Subnet
 2. Create a Security Group that allows SSH access to 0.0.0.0/0 and attaches it to the Instance
 3. Fetches the Public IP assigned to the EC2 instance and creates a DNS record called "rudra" in a hosted zone called "veludandi.online"
 
