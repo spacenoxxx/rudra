@@ -21,3 +21,7 @@
 ## HostedZone on AWS after DNS Record creation
 
 ![HostedZone-After-DNSRecord.png](./img/HostedZone-After-DNSRecord.png)
+
+## To test the PoC, do the following. You must already have the following (AWS Account with aws-cli configured)
+
+Run the following command with aws-cli `aws cloudformation deploy --template-file ec2-noip.yaml --stack-name ec2-noip2 --region ap-south-1`
