@@ -6,4 +6,4 @@
 
 ## HostedZOne on AWS before DNS Record creation
 
-![HostedZone-Before-DNSRecord.png](./img/HostedZone-Before-DNSRecord.png
+![HostedZone-Before-DNSRecord.png](./img/HostedZone-Before-DNSRecord.png)
