@@ -2,7 +2,7 @@
 
 ## This PoC assumes the folloiwng:
 
-1. An existing VPN in AWS
+1. An existing VPC in AWS
 2. A public Subnet created in the above VPC
 3. An exsiting AWS Key-Pair
 
