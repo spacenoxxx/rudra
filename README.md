@@ -29,7 +29,7 @@
 
 ## To test the PoC in the region ap-south-1, do the following. You must already have the following (AWS Account with aws-cli configured)
 
-You have to populate the following parameters with the appropriate values in the `ec2-noip.yaml` template:
+You have to populate the `default` values of the below given parameters as needed in the `ec2-noip.yaml` template:
 
 1. VpcId = 
 2. ImageId = 
