@@ -1,7 +1,7 @@
 # RUDRA Shelcal PoC
 
 ## This PoC does the following:
-1. Created a Linux EC2 instance in a precreated VPC with a Public Subnet
+1. Creates a Linux EC2 instance in a precreated VPC with a Public Subnet
 2. Deploys it in the Public Subnet
 3. Creates a Security Group that allows SSH access to 0.0.0.0/0 and attaches it to the Instance
 4. Creates a DNS record called "rudra" in an hosted zone called "veludandi.online"
