@@ -94,7 +94,7 @@ Resources:
           Value: Support Test Instance
         -
           Key: Source
-          Value: CloudForation Script in https://github.com/spacenoxxx/aws-cloudformations
+          Value: CloudForation Script in https://github.com/spacenoxxx/rudra.git
 
 Outputs:
   PublicIp:
