@@ -1,0 +1,1 @@
+# This deploys an EC2 instance, allows ssh access and creates a DNS entry in a Domain/HostedZone
