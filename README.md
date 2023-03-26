@@ -5,6 +5,7 @@
 1. An existing VPC in AWS
 2. A public Subnet created in the above VPC
 3. An exsiting AWS Key-Pair
+4. A Hostedzone in AWS
 
 ## This PoC uses AWS CloudFormation template to:
 1. Deploy a Linux EC2 instance in a precreated VPC with a Public Subnet
