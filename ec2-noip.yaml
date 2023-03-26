@@ -33,7 +33,7 @@ Resources:
     Properties:
       HostedZoneName: !Ref 'HostedZoneName'
       Comment: DNS name for my instance.
-      Name: !Join ['', [!Ref 'Subdomain', ., !Ref 'HostedZoneName']]
+      Name: !Join ['', [!Ref 'Hostname', ., !Ref 'HostedZoneName']]
       Type: A
       TTL: '900'
       ResourceRecords:
