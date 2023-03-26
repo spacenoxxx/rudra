@@ -1,0 +1,121 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template to Create an EC2 instance in a VPC
+   
+Parameters:
+  VpcId:
+    Type: String
+    Description: VPC id
+    Default: vpc-0cdacb420e2f86921
+  ImageId:
+    Type: String
+    Description: 'Linux 2 AMI for India ap-south-1 Region'
+    Default: 'ami-0cca134ec43cf708f'
+  InstanceType:
+    Type: String
+    Description: Choosing  t2 micro because it is free
+    Default: t2.micro
+  KeyName:
+    Description: SSH Keypair to login to the instance
+    Type: AWS::EC2::KeyPair::KeyName
+    Default: EC2-PRIV-01
+  HostedZoneName:
+    Description: The name of the Hosted Zone
+    Type: String
+    Default: veludandi.online.
+  Hostname:
+    Description: The dns entry. 
+    Type: String
+    Default: rudra        
+
+Resources:
+  DnsRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneName: !Ref 'HostedZoneName'
+      Comment: DNS name for my instance.
+      Name: !Join ['', [!Ref 'Subdomain', ., !Ref 'HostedZoneName']]
+      Type: A
+      TTL: '900'
+      ResourceRecords:
+      - !GetAtt NoEIPInstance.PublicIp
+
+  NoEIPSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      VpcId: !Ref VpcId
+      GroupDescription: SG to allow SSH access via port 2233
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp: '0.0.0.0/0'
+      Tags:
+        - Key: Name
+          Value: EC2-NoEIP-SG
+
+  NoEIPInstance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      SubnetId: !ImportValue PublicSubnet1
+      ImageId: !Ref ImageId
+      InstanceType:
+        Ref: InstanceType
+      KeyName: !Ref KeyName
+      SecurityGroupIds:
+        - !Ref NoEIPSecurityGroup         
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: 8
+      Tags:
+        -
+          Key: Appplication
+          Value: Linux Server
+        -
+          Key: Domain
+          Value: !Ref 'HostedZoneName'
+        -
+          Key: Environment
+          Value: Test
+        -
+          Key: LifeTime
+          Value: Transient
+        -
+          Key: Name
+          Value: !Ref 'Hostname'
+        -
+          Key: OS
+          Value: Linux
+        -
+          Key: OwnerContact
+          Value: "chaitanya.ram@gmail.com"
+        -
+          Key: Purpose
+          Value: Support Test Instance
+        -
+          Key: Source
+          Value: CloudForation Script in https://github.com/spacenoxxx/aws-cloudformations
+
+Outputs:
+  PublicIp:
+    Value:
+      Fn::GetAtt:
+        - NoEIPInstance
+        - PublicIp
+    Description: Server's PublicIp Address
+  InstanceId:
+    Description: InstanceId of the newly created EC2 instance
+    Value:
+      Ref: NoEIPInstance
+  AZ:
+    Description: Availability Zone of the newly created EC2 instance
+    Value:
+      Fn::GetAtt:
+      - NoEIPInstance
+      - AvailabilityZone
+  PublicDNS:
+    Description: Public DNSName of the newly created EC2 instance
+    Value:
+      Fn::GetAtt:
+      - NoEIPInstance
+      - PublicDnsName 
