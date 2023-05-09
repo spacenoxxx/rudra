@@ -1,0 +1,18 @@
+$zoneName = "example.com"
+$ptrName = "server.example.com"
+$ipAddress = "192.168.1.100"
+
+$zone = Get-WmiObject -Namespace "root\MicrosoftDNS" -Class "MicrosoftDNS_Zone" -Filter "ContainerName='$zoneName' AND DsIntegrated=1"
+if ($zone) {
+    $ptrZoneName = [System.Net.IPAddress]::Parse($ipAddress).GetAddressBytes() | %{ "$_." } | %{$ptrZoneName += $_}; $ptrZoneName += "in-addr.arpa"
+    $ptrRecord = ([wmiclass]"\\.\root\MicrosoftDNS:MicrosoftDNS_PTRType").CreateInstance()
+    $ptrRecord.ContainerName = $ptrZoneName
+    $ptrRecord.OwnerName = $ptrName
+    $ptrRecord.RecordClass = 1
+    $ptrRecord.TTL = 3600
+    $ptrRecord.RecordData = $ipAddress
+    $zone.AddDynamicPTR($ptrRecord)
+    Write-Host "Successfully added PTR record for $ipAddress with hostname $ptrName in zone $zoneName"
+} else {
+    Write-Host "DNS zone $zoneName not found or not AD-integrated"
+}
