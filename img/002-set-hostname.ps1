@@ -21,8 +21,12 @@ New-NetRoute -InterfaceIndex $adapter.ifIndex -DestinationPrefix "0.0.0.0/0" -Ne
 #Set DNS Server 
 Set-DnsClientServerAddress -InterfaceIndex $adapter.ifIndex -ServerAddresses $dnsserver
 
+#Setup Default Gateway
 $adapter | Remove-NetRoute -Confirm:$false
 New-NetRoute -InterfaceIndex $adapter.ifIndex -DestinationPrefix "0.0.0.0/0" -NextHop $gateway
+
+#Remove IPv6 binding
+Disable-NetAdapterBinding -Name 'Ethernet' -ComponentID 'ms_tcpip6'
 
 # Set Hostname
 Rename-Computer -NewName $comp-name -Restart
