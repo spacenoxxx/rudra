@@ -1,5 +1,5 @@
 #Set AD DNS Reverse Lookup Zone
-Add-DnsServerPrimaryZone -NetworkID "192.168.101.0/24" -ReplicationScope "Domain"
+Add-DnsServerPrimaryZone -NetworkID "10.1.1.0/24" -ReplicationScope "Domain"
 
 #Set ADDC's own IP as the defaultr DNS Server
 Set-DNSClientServerAddress "Ethernet" -ServerAddresses "10.1.1.201"
