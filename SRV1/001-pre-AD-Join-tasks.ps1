@@ -10,8 +10,8 @@ $UserAccount = Get-LocalUser -Name "Administrator"
 $userAccount | Set-LocalUser -Password $Password
 
 # Rename Interface
-Get-NetAdapter | Where-Object {$_.InterfaceDescription -like "*VirtIO*"} | Rename-NetAdapter -NewName "Ethernet"
-$adapter = Get-NetAdapter | Where-Object {$_.InterfaceDescription -like "*VirtIO*"}
+Get-NetAdapter | Where-Object {$_.InterfaceDescription -like "*Intel*"} | Rename-NetAdapter -NewName "Ethernet"
+$adapter = Get-NetAdapter | Where-Object {$_.InterfaceDescription -like "*Intel*"}
 
 # Remove any existing IP addresses and set the new one
 $adapter | Remove-NetIPAddress -Confirm:$false
