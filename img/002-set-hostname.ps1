@@ -5,6 +5,10 @@ $gateway = "10.1.1.254"
 $dnsserver = "10.1.1.201"
 $comp-name = "SRV1"
 
+$Password = ConvertTo-SecureString "!QAZ2wsx" -AsPlainText -Force
+$UserAccount = Get-LocalUser -Name "Administrator"
+$userAccount | Set-LocalUser -Password $Password
+
 # Rename Interface
 Get-NetAdapter | Where-Object {$_.InterfaceDescription -like "*VirtIO*"} | Rename-NetAdapter -NewName "Ethernet"
 $adapter = Get-NetAdapter | Where-Object {$_.InterfaceDescription -like "*VirtIO*"}
