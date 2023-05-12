@@ -25,6 +25,12 @@ Set-DnsClientServerAddress -InterfaceIndex $adapter.ifIndex -ServerAddresses $dn
 $adapter | Remove-NetRoute -Confirm:$false
 New-NetRoute -InterfaceIndex $adapter.ifIndex -DestinationPrefix "0.0.0.0/0" -NextHop $gateway
 
+#Enable RDP
+Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server" -Name "fDenyTSConnections" -Value 0
+Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name "UserAuthentication" -Value 0
+Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+
+
 #Remove IPv6 binding
 Disable-NetAdapterBinding -Name 'Ethernet' -ComponentID 'ms_tcpip6'
 
